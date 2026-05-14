@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World After The Fall</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #050505;
+      color: white;
+      overflow: hidden;
+    }
+
+    #game {
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(to bottom, #1a0000, #000000);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screen {
+      display: none;
+      width: 100%;
+      height: 100%;
+      padding: 40px;
+      overflow-y: auto;
+      animation: fadeIn 0.7s ease;
+    }
+
+    .active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .title {
+      font-size: 72px;
+      text-align: center;
+      font-weight: bold;
+      line-height: 1.1;
+      letter-spacing: 4px;
+    }
+
+    .subtitle {
+      margin-top: 25px;
+      max-width: 760px;
+      text-align: center;
+      color: #c5c5c5;
+      line-height: 1.8;
+      font-size: 18px;
+    }
+
+    .btn {
+      margin-top: 35px;
+      padding: 16px 34px;
+      border: none;
+      border-radius: 14px;
+      background: crimson;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      background: #ff1744;
+    }
+
+    .section-title {
+      font-size: 52px;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .card {
+      width: 240px;
+      background: #121212;
+      border: 1px solid #2a2a2a;
+      border-radius: 20px;
+      padding: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: crimson;
+    }
+
+    .card h3 {
+      margin-bottom: 14px;
+      color: #ff4d6d;
+    }
+
+    .story-box {
+      max-width: 950px;
+      background: rgba(0,0,0,0.65);
+      border: 1px solid #2a2a2a;
+      border-radius: 20px;
+      padding: 30px;
+      line-height: 2;
+      color: #dddddd;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    .choice-container {
+      width: 340px;
+      margin-top: 30px;
+    }
+
+    .choice-btn {
+      width: 100%;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 12px;
+      border: none;
+      background: #1e1e1e;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 16px;
+    }
+
+    .choice-btn:hover {
+      background: crimson;
+    }
+
+    .memory-image {
+      width: 340px;
+      height: 200px;
+      border-radius: 20px;
+      background: linear-gradient(to bottom right, #2a0000, #000000);
+      border: 1px solid #444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      text-align: center;
+      margin-bottom: 25px;
+      padding: 20px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="game">
+
+  <!-- HOME -->
+  <div id="home" class="screen active">
+    <div class="title">WORLD AFTER<br>THE FALL</div>
+
+    <div class="subtitle">
+      A dark fantasy interactive RPG where a summoned hero enters a dying magical world ruled by hidden gods, endless war, emotional sacrifice, and painful truths.
+    </div>
+
+    <button class="btn" onclick="showScreen('raceScreen')">
+      BEGIN SUMMONING
+    </button>
+
+    <div class="footer">Interactive Dark Fantasy Prototype</div>
+  </div>
+
+  <!-- RACE -->
+  <div id="raceScreen" class="screen">
+    <div class="section-title">Choose Your Race</div>
+
+    <div class="card-container">
+      <div class="card" onclick="selectRace('Human')">
+        <h3>Human</h3>
+        <p>Balanced warriors trusted by kingdoms.</p>
+      </div>
+
+      <div class="card" onclick="selectRace('Mage')">
+        <h3>Mage</h3>
+        <p>Masters of destructive arcane arts.</p>
+      </div>
+
+      <div class="card" onclick="selectRace('Priest')">
+        <h3>Priest</h3>
+        <p>Faith protectors blessed with healing.</p>
+      </div>
+
+      <div class="card" onclick="selectRace('Beastman')">
+        <h3>Beastman</h3>
+        <p>Fast and feared hunters of war.</p>
+      </div>
+
+      <div class="card" onclick="selectRace('Goblin')">
+        <h3>Goblin</h3>
+        <p>Weak initially but terrifying later.</p>
+      </div>
+
+      <div class="card" onclick="selectRace('Dragon')">
+        <h3>Dragon</h3>
+        <p>Ancient bloodline feared by gods.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLESSING -->
+  <div id="blessingScreen" class="screen">
+    <div class="section-title">Choose Your Blessing</div>
+
+    <div class="card-container">
+      <div class="card" onclick="selectBlessing('Flame of Eternity')">
+        <h3>Flame of Eternity</h3>
+        <p>Power, aggression, and burning attacks.</p>
+      </div>
+
+      <div class="card" onclick="selectBlessing('Whisper of Shadows')">
+        <h3>Whisper of Shadows</h3>
+        <p>Stealth, speed, and illusion techniques.</p>
+      </div>
+
+      <div class="card" onclick="selectBlessing('Song of Renewal')">
+        <h3>Song of Renewal</h3>
+        <p>Healing, protection, and emotional resonance.</p>
+      </div>
+
+      <div class="card" onclick="selectBlessing('Forsaken')">
+        <h3>Forsaken</h3>
+        <p>Reject the gods and walk the hidden path.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRO STORY -->
+  <div id="storyScreen" class="screen">
+    <div class="section-title">The Beginning</div>
+
+    <div class="story-box" id="storyText"></div>
+
+    <div class="choice-container">
+      <button class="choice-btn" onclick="battleChoice('protect')">
+        Protect Civilians
+      </button>
+
+      <button class="choice-btn" onclick="battleChoice('fight')">
+        Charge Into Battle
+      </button>
+    </div>
+  </div>
+
+  <!-- JOURNEY -->
+  <div id="journeyScreen" class="screen">
+    <div class="section-title">The Journey Begins</div>
+
+    <div class="story-box">
+      After escaping the ruined battlefield with Elira, both of you travel through the outer kingdoms.
+
+      <br><br>
+
+      Villages burn.
+      Survivors pray.
+      Soldiers lose hope.
+
+      <br><br>
+
+      Rumors spread everywhere:
+
+      <br><br>
+
+      • The Demon Lord protects demon children instead of slaughtering humans.<br>
+      • The church executes anyone investigating the gods.<br>
+      • A hidden tournament seeks warriors capable of killing divine beings.<br>
+      • Ancient mythical weapons have begun awakening again.
+
+      <br><br>
+
+      During the night, Elira quietly asks:
+
+      <br><br>
+
+      <strong>“Can I truly trust you... summoned one?”</strong>
+    </div>
+
+    <div class="choice-container">
+      <button class="choice-btn" onclick="makeJourneyChoice('trust')">
+        Promise To Protect Elira
+      </button>
+
+      <button class="choice-btn" onclick="makeJourneyChoice('distance')">
+        Remain Emotionally Distant
+      </button>
+    </div>
+  </div>
+
+  <!-- MEMORY -->
+  <div id="memoryScreen" class="screen">
+    <div class="section-title">Memory Fragment</div>
+
+    <div class="memory-image">
+      Important Illustrated Scene Placeholder
+    </div>
+
+    <div class="story-box" id="memoryText"></div>
+
+    <button class="btn" onclick="showTournamentArc()">
+      Continue Story
+    </button>
+  </div>
+
+  <!-- TOURNAMENT -->
+  <div id="tournamentScreen" class="screen">
+    <div class="section-title">The Crimson Tournament</div>
+
+    <div class="story-box">
+      Deep beneath the ruined kingdom of Veyra, thousands gather around a forbidden underground arena.
+
+      <br><br>
+
+      The strongest mercenaries, assassins, nobles, demons, and summoned warriors fight here.
+
+      Not for glory.
+
+      But for survival.
+
+      <br><br>
+
+      The winner receives:
+
+      <br><br>
+
+      <strong>One Mythical Weapon Capable Of Killing Gods.</strong>
+
+      <br><br>
+
+      Elira fears entering.
+
+      But your path forward may depend on it.
+    </div>
+
+    <div class="choice-container">
+      <button class="choice-btn" onclick="tournamentChoice('join')">
+        Enter The Tournament
+      </button>
+
+      <button class="choice-btn" onclick="tournamentChoice('refuse')">
+        Avoid Bloodshed
+      </button>
+    </div>
+  </div>
+
+  <!-- FINAL -->
+  <div id="endingScreen" class="screen">
+    <div class="section-title">Fate Has Changed</div>
+
+    <div class="memory-image">
+      Future Emotional Scene Illustration
+    </div>
+
+    <div class="story-box" id="endingText"></div>
+
+    <button class="btn" onclick="location.reload()">
+      Restart Story
+    </button>
+  </div>
+
+</div>
+
+<script>
+
+let playerRace = '';
+let playerBlessing = '';
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(screen => {
+    screen.classList.remove('active');
+  });
+
+  document.getElementById(id).classList.add('active');
+}
+
+function selectRace(race) {
+  playerRace = race;
+  showScreen('blessingScreen');
+}
+
+function selectBlessing(blessing) {
+  playerBlessing = blessing;
+
+  showScreen('storyScreen');
+
+  document.getElementById('storyText').innerHTML = `
+    You awaken in the middle of a burning battlefield.
+
+    <br><br>
+
+    Screams echo across ruined kingdom walls while monsters tear through soldiers and civilians alike.
+
+    <br><br>
+
+    The system recognizes your existence.
+
+    <br><br>
+
+    <strong>Race Selected:</strong> ${playerRace}<br>
+    <strong>Blessing Selected:</strong> ${playerBlessing}
+
+    <br><br>
+
+    A wounded priestess named Elira grabs your arm and pulls you away from collapsing debris.
+
+    <br><br>
+
+    <strong>“Please... if you truly were summoned... then save these people...”</strong>
+
+    <br><br>
+
+    In the distance, a mysterious woman watches the battlefield silently through the flames.
+  `;
+}
+
+function battleChoice(choice) {
+  showScreen('journeyScreen');
+}
+
+function makeJourneyChoice(choice) {
+  showScreen('memoryScreen');
+
+  if(choice === 'trust') {
+    document.getElementById('memoryText').innerHTML = `
+      You promise Elira that no matter what happens...
+      you will protect her.
+
+      <br><br>
+
+      That night, both of you hide inside the ruins of an abandoned church while rain falls outside.
+
+      <br><br>
+
+      Survivors whisper prayers to gods that never answer.
+
+      <br><br>
+
+      Elira stares toward the broken sky.
+
+      <br><br>
+
+      <strong>“If the gods truly loved this world... why does everyone keep suffering?”</strong>
+
+      <br><br>
+
+      For the first time...
+      doubt appears in her eyes.
+
+      <br><br>
+
+      MEMORY UNLOCKED:
+      <br>
+      <strong>The Night of Silent Prayers</strong>
+    `;
+  }
+  else {
+    document.getElementById('memoryText').innerHTML = `
+      You choose to remain emotionally distant.
+
+      <br><br>
+
+      Elira begins fearing the darkness hidden within your blessing.
+
+      <br><br>
+
+      Deep inside a ruined forest, both of you discover hundreds of nameless graves.
+
+      <br><br>
+
+      Each grave belongs to previously summoned heroes.
+
+      <br><br>
+
+      <strong>“They were abandoned...”</strong>
+
+      Elira whispers weakly.
+
+      <br><br>
+
+      MEMORY UNLOCKED:
+      <br>
+      <strong>Forest of Forgotten Heroes</strong>
+    `;
+  }
+}
+
+function showTournamentArc() {
+  showScreen('tournamentScreen');
+}
+
+function tournamentChoice(choice) {
+  showScreen('endingScreen');
+
+  if(choice === 'join') {
+    document.getElementById('endingText').innerHTML = `
+      You enter the Crimson Tournament.
+
+      <br><br>
+
+      Warriors from every kingdom gather beneath crimson flames.
+
+      <br><br>
+
+      During your final battle...
+      the crowd suddenly falls silent.
+
+      <br><br>
+
+      A woman wearing black armor steps into the arena.
+
+      <br><br>
+
+      Crimson eyes.
+      Familiar presence.
+
+      <br><br>
+
+      Elira trembles beside you.
+
+      <br><br>
+
+      <strong>“That’s impossible...”</strong>
+
+      <br><br>
+
+      The woman slowly raises her blade.
+
+      <br><br>
+
+      <strong>“So the gods summoned another puppet.”</strong>
+
+      <br><br>
+
+      You finally meet the Demon Lord.
+    `;
+  }
+  else {
+    document.getElementById('endingText').innerHTML = `
+      You reject the tournament and continue protecting refugees across ruined kingdoms.
+
+      <br><br>
+
+      People slowly begin seeing you as hope instead of a weapon.
+
+      <br><br>
+
+      But one night...
+      an entire village disappears.
+
+      <br><br>
+
+      No bodies.
+      No survivors.
+
+      Only a message written across the ground.
+
+      <br><br>
+
+      <strong>“The gods are watching.”</strong>
+
+      <br><br>
+
+      Somewhere in the darkness...
+      the Demon Lord watches your journey silently.
+    `;
+  }
+}
+
+</script>
+
+</body>
+</html>
